@@ -12,5 +12,9 @@ end
 # By default we want to import all available actions and helpers
 # A plugin can contain any number of actions and plugins
 Nephrase::TranslateGpt.all_classes.each do |current|
-  require current
+  begin
+    require current
+  rescue LoadError => e
+    warn "Failed to load #{current}: #{e.message}"
+  end
 end
