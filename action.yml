@@ -1,0 +1,79 @@
+name: Neophrase Translate Action
+description: A GitHub Action to translate iOS and Android app strings using the Neophrase plugin for Fastlane.
+
+inputs:
+  api_key:
+    description: "The API key for OpenAI GPT (used for translation)."
+    required: true
+    default: ${{ secrets.GPT_API_KEY }}
+  target_language:
+    description: "The target language for translation (e.g., 'fr' for French)."
+    required: true
+  source_language:
+    description: "The source language for translation (optional). Defaults to auto-detection."
+    required: false
+  model_name:
+    description: "The OpenAI GPT model name to use (optional)."
+    required: false
+  temperature:
+    description: "Sampling temperature for model output (optional, default is 0.5)."
+    required: false
+    default: "0.5"
+  request_timeout:
+    description: "Request timeout in seconds (optional, default is 30)."
+    required: false
+    default: "30"
+  skip_translated:
+    description: "Whether to skip already translated strings (optional, default is true)."
+    required: false
+    default: "true"
+  source_file:
+    description: "Path to the source strings file (e.g., Localizable.strings or strings.xml)."
+    required: true
+  target_file:
+    description: "Path to the output file for translated strings."
+    required: true
+  context:
+    description: "Common context to provide for all translations (optional)."
+    required: false
+  bunch_size:
+    description: "Number of strings to translate in one request (optional)."
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.3.4
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: Run Neophrase Translation
+      env:
+        GPT_API_KEY: ${{ inputs.api_key }}
+      run: |
+        fastlane translate_gpt \
+          api_key:${{ inputs.api_key }} \
+          target_language:${{ inputs.target_language }} \
+          source_language:${{ inputs.source_language || '' }} \
+          model_name:${{ inputs.model_name || '' }} \
+          temperature:${{ inputs.temperature }} \
+          request_timeout:${{ inputs.request_timeout }} \
+          skip_translated:${{ inputs.skip_translated }} \
+          source_file:${{ inputs.source_file }} \
+          target_file:${{ inputs.target_file }} \
+          context:${{ inputs.context || '' }} \
+          bunch_size:${{ inputs.bunch_size || '' }}
+
+outputs:
+  translation_result:
+    description: "The result of the translation process."
