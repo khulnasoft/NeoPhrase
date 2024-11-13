@@ -1,0 +1,12 @@
+*.gem
+Gemfile.lock
+
+## Documentation cache and generated files:
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+neophrase/README.md
+neophrase/report.xml
+coverage
+test-results
