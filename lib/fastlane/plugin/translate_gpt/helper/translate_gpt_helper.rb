@@ -4,10 +4,7 @@ require 'json'
 # rubocop:disable all
 
 module Fastlane
-  # In lib/neophrase/plugin/translate_gpt/initializer.rb:
-  module Fastlane
-    UI = FastlaneCore::UI unless defined?(UI)
-  end
+  UI = FastlaneCore::UI unless Fastlane.const_defined?("UI")
 
   module Helper
     class TranslateGptHelper

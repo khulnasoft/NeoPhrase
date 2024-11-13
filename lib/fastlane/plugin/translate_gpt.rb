@@ -1,4 +1,4 @@
-require 'neophrase/plugin/translate_gpt/version'
+require 'fastlane/plugin/translate_gpt/version'
 
 module Fastlane
   module TranslateGpt
