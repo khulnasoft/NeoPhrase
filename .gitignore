@@ -6,7 +6,7 @@ Gemfile.lock
 /_yardoc/
 /doc/
 /rdoc/
-neophrase/README.md
-neophrase/report.xml
+fastlane/README.md
+fastlane/report.xml
 coverage
 test-results

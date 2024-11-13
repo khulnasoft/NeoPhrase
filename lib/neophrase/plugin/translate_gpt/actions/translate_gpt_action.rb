@@ -1,9 +1,9 @@
-require 'neophrase/action'
+require 'fastlane/action'
 require 'openai'
 require_relative '../helper/translate_gpt_helper'
 require 'loco_strings'
 
-module Neophrase
+module Fastlane
   module Actions
     class TranslateGptAction < Action
       def self.run(params)
@@ -29,7 +29,7 @@ module Neophrase
 
       def self.available_options
         [
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :api_token,
             env_name: "GPT_API_KEY",
             description: "API token for ChatGPT",
@@ -37,20 +37,20 @@ module Neophrase
             code_gen_sensitive: true,
             default_value: ""
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :model_name,
             env_name: "GPT_MODEL_NAME",
             description: "Name of the ChatGPT model to use",
             default_value: "gpt-3.5-turbo"
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :request_timeout,
             env_name: "GPT_REQUEST_TIMEOUT",
             description: "Timeout for the request in seconds",
             type: Integer,
             default_value: 30
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :temperature,
             env_name: "GPT_TEMPERATURE",
             description: "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic",
@@ -58,7 +58,7 @@ module Neophrase
             optional: true,
             default_value: 0.5
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :skip_translated,
             env_name: "GPT_SKIP_TRANSLATED",
             description: "Whether to skip strings that have already been translated",
@@ -66,19 +66,19 @@ module Neophrase
             optional: true,
             default_value: true
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :source_language,
             env_name: "GPT_SOURCE_LANGUAGE",
             description: "Source language to translate from",
             default_value: "auto"
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :target_language,
             env_name: "GPT_TARGET_LANGUAGE",
             description: "Target language to translate to",
             default_value: "en"
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :source_file,
             env_name: "GPT_SOURCE_FILE",
             description: "The path to the Localizable.strings file to be translated",
@@ -89,7 +89,7 @@ module Neophrase
               UI.user_error!("Translation file must have any of these extensions: #{available_extensions}") unless available_extensions.include? extension
             end
           ),
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :target_file,
             env_name: "GPT_TARGET_FILE",
             description: "Path to the translation file to update",
@@ -100,14 +100,14 @@ module Neophrase
               UI.user_error!("Translation file must have any of these extensions: #{available_extensions}") unless available_extensions.include? extension
             end
           ),    
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :context,
             env_name: "GPT_COMMON_CONTEXT",
             description: "Common context for the translation",
             optional: true,
             type: String
           ), 
-          NeophraseCore::ConfigItem.new(
+          FastlaneCore::ConfigItem.new(
             key: :bunch_size,
             env_name: "GPT_BUNCH_SIZE",
             description: "Number of strings to translate in a single request",
@@ -131,7 +131,7 @@ module Neophrase
       end      
 
       def self.authors
-        ["ftp27"]
+        ["khulnasoft"]
       end
 
       def self.is_supported?(platform)

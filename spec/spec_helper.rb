@@ -9,7 +9,7 @@ SimpleCov.start
 module SpecHelper
 end
 
-require 'neophrase' # to import the Action super class
+require 'fastlane' # to import the Action super class
 require 'neophrase/plugin/translate_gpt' # import the actual plugin
 
 Fastlane.load_actions # load other actions (in case your plugin calls other actions or shared values)

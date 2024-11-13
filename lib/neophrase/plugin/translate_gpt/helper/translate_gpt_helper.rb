@@ -1,10 +1,10 @@
-require 'nephrase_core/ui/ui'
+require 'fastlane_core/ui/ui'
 require 'loco_strings/parsers/xcstrings_file'
 require 'json'
 # rubocop:disable all
 
-module Nephrase
-  UI = NephraseCore::UI unless Nephrase.const_defined?("UI")
+module Fastlane
+  UI = FastlaneCore::UI unless Fastlane.const_defined?("UI")
 
   module Helper
     class TranslateGptHelper
